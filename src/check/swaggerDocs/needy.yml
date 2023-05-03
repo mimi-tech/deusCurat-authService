@@ -1,0 +1,265 @@
+paths:
+  
+/needy/create-needy-account:
+    post:
+      tags: # Tag property
+        - NEEDY # Value of the tag
+      summary:  DEUSCURAT CREATE TESTIMONY.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-
+        - in: body # request body
+          name: create-needy-account # name of request, can be any name
+          description: It enables all needy to be created 
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/createNeedyRequest"
+      responses: # server responses
+        201:
+          description: should return a needy account created successful            
+
+
+
+/needy/get-all-needy-account:
+    get:
+      tags:
+        - NEEDY # Value of the tag
+      summary: GET ALL NEEDY.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: query
+          name: page
+          type: number
+          default: 1
+          required: true
+
+        - in: query
+          name: type
+          type: string
+          default: all
+          required: true  
+
+      responses:
+        200:
+          description: should return all testimony
+
+
+/needy/get-a-needy-account:
+    get:
+      tags:
+        - NEEDY # Value of the tag
+      summary: GET A NEEDY.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: query
+          name: userAuthId
+          type: string
+          default: 62fb5d63cd470527f65f7d05
+          required: true
+
+      responses:
+        200:
+          description: should return all needy
+
+/needy/delete-a-needy-account:
+    delete:
+      tags: # Tag property
+        - NEEDY # Value of the tag
+      summary:  DEUSCURAT DELETE NEEDY ACCOUNT.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-
+        - in: body # request body
+          name: delete-needy-account # name of request, can be any name
+          description: It enables a needy account to be deleted
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/deleteTestimony"
+      responses: # server responses
+        201:
+          description: should return deleted successful
+
+
+/needy/update-a-needy-account:
+    put:
+      tags: # Tag property
+        - NEEDY # Value of the tag
+      summary:  DEUSCURAT UPDATE NEEDY ACCOUNT.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-
+        - in: body # request body
+          name: update-a-needy-account # name of request, can be any name
+          description: It enables a needy account to be updated
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/updateANeedy"
+      responses: # server responses
+        201:
+          description: should return deleted successful                      
+
+
+/needy/update-a-needy-account-count:
+    put:
+      tags: # Tag property
+        - NEEDY # Value of the tag
+      summary:  DEUSCURAT UPDATE NEEDY ACCOUNT COUNT.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-
+        - in: body # request body
+          name: update-a-needy-account-count # name of request, can be any name
+          description: It enables a needy account to be updated
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/updateANeedyCount"
+      responses: # server responses
+        201:
+          description: should return UPDATED successful
+
+
+/needy/update-a-needy-account-status:
+    put:
+      tags: # Tag property
+        - NEEDY # Value of the tag
+      summary:  DEUSCURAT UPDATE NEEDY ACCOUNT STATUS.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-
+        - in: body # request body
+          name: update-a-needy-account-status # name of request, can be any name
+          description: It enables a needy account status to be updated
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/updateANeedyStatus"
+      responses: # server responses
+        201:
+          description: should return UPDATED successful          
+
+definitions: # Schema definition for request body
+        
+  createNeedyRequest:
+    type: object
+    properties:
+      images:
+        type: array
+        default: ["https://image.jpg"] 
+
+      description:
+        type: string
+        default: "How are you"
+
+      title:
+        type: string
+        default: "Amazing"
+
+      email:
+        type: string
+        default: mimi@gmail.com
+
+
+      address:
+        type: string
+        default: "No 123b Owerri"
+
+         
+
+
+
+  deleteTestimony:
+    type: object
+    properties:
+      testimonyId:
+        type: string
+        default: 62fb5d63cd470527f65f7d05 
+
+
+  updateANeedy:
+    type: object
+    properties:
+      title:
+        type: string
+        default: "Alright" 
+
+      description:
+        type: string
+        default: "Good Alright"    
+
+      userAuthId:
+        type: string
+        default: 62fb5d63cd470527f65f7d05 
+
+      amountNeeded:
+        type: number
+        default: 4000   
+
+
+  updateANeedyCount:
+    type: object
+    properties:
+  
+      userAuthId:
+        type: string
+        default: 62fb5d63cd470527f65f7d05 
+
+      type:
+        type: string
+        default: paid  
+
+      amount:
+        type: number
+        default: 1000    
+  
+
+  updateANeedyStatus:
+    type: object
+    properties:
+  
+      userAuthId:
+        type: string
+        default: 62fb5d63cd470527f65f7d05    
+
+      type:
+        type: string
+        default: all    
+
+    

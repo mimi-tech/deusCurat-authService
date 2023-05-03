@@ -1,0 +1,157 @@
+paths:
+  /payment/add-payment:
+    post:
+      tags: # Tag property
+        - PAYMENT # Value of the tag
+      summary:  DEUSCURAT COMMONS.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-
+        - in: body # request body
+          name: add-payment # name of request, can be any name
+          description: It enables all users to create account
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/addCommons"
+      responses: # server responses
+        201:
+          description: should return a payment added successful
+
+
+  /payment/get-payment:
+    get:
+      tags:
+        - PAYMENT # Value of the tag
+      summary: GET ALL PAYMENT.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: query
+          name: page
+          type: number
+          default: 1
+          required: true
+
+        - in: query
+          name: requestId
+          type: string
+          default: 18732736297312837832
+          required: true  
+
+      responses:
+        200:
+          description: should return all commons
+
+
+
+  /payment/update-payment:
+    put:
+      tags: # Tag property
+        - PAYMENT # Value of the tag
+      summary:  DEUSCURAT UPDATE PAYMENT.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-
+        - in: body # request body
+          name: delete-support # name of request, can be any name
+          description: It enables all payment to be updated 
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/updatePayment"
+      responses: # server responses
+        201:
+          description: should return a support created successful            
+
+
+
+
+  /payment/delete-payment:
+    delete:
+      tags: # Tag property
+        - PAYMENT # Value of the tag
+      summary:  DEUSCURAT DELETE PAYMENT.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-
+        - in: body # request body
+          name: delete-payment # name of request, can be any name
+          description: It enables all supports to be deleted
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/deleteSupport"
+      responses: # server responses
+        201:
+          description: should return a support deleted successful            
+
+
+
+
+definitions: # Schema definition for request body
+   
+  addCommons:
+    type: object
+    properties:
+      accountDetails:
+        type: object
+        properties:
+          prove:
+            type: string
+            default: mimi.jpg
+
+          amount:
+            type: number
+            default: 1283273298
+
+          requestId:
+            type: string
+            default: UBA      
+
+
+  deleteSupport:
+    type: object
+    properties:
+      paymentId:
+        type: string
+        default: 62fb5d63cd470527f65f7d05 
+
+
+  updatePayment:
+    type: object
+    properties:
+      requestAuthId:
+        type: string
+        default: Yes I am  
+
+      userAuthId:
+        type: string
+        default: Good  
+
+      paymentId:
+        type: string
+        default: Good 
+
+      amount:
+        type: string
+        default: Good      
+                 
