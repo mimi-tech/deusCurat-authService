@@ -3,10 +3,10 @@ const Joi = require("joi");
 module.exports = {
   
     createNeedyRequest: {
-        images: Joi.array().required(),
+        images: Joi.string().required(),
+        video: Joi.string().required(),
         description: Joi.string().required(),
         title: Joi.string().required(),
-        email: Joi.string().required(),
         address: Joi.string().required(),
 
   },

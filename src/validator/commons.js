@@ -10,9 +10,7 @@ module.exports = {
   }).required(),
   },
 
-  getCommons:{
-    page:Joi.number().required()
-  },
+  
 
   createSupport:{
     message: Joi.string().required(),

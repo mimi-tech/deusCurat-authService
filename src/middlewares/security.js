@@ -9,6 +9,7 @@ const nonRestrictedEndPoints = [
   "/login",
   "/validate-user-token",
   "/update-password",
+  "/get-commons",
 ];
 
 
@@ -20,7 +21,6 @@ const restricted = [
   "/get-a-user",
   "/search-user",
   "/add-commons",
-  "/get-commons",
   "/create-support",
   "/get-support",
   "/delete-support",

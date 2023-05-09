@@ -6,10 +6,7 @@ const addCommons = async (req, res) => {
   return response(res, data);
 }
 
-const getCommons = async (req, res) => {
-    const data = await commons.getCommons(req.form);
-    return response(res, data);
-  }
+
 
 
   const createSupport = async (req, res) => {
@@ -18,7 +15,7 @@ const getCommons = async (req, res) => {
   }
 
   const getSupport = async (req, res) => {
-    const data = await commons.getSupport(req.form);
+    const data = await auth.getSupport(req.form);
     return response(res, data);
   }
 
@@ -29,9 +26,8 @@ const getCommons = async (req, res) => {
 
   module.exports = {
     addCommons,
-    getCommons,
-    createSupport,
     getSupport,
+    createSupport,
     deleteSupport
   }
   

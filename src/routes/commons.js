@@ -11,12 +11,6 @@ routes.post(
   commons.addCommons
 );
 
-routes.get(
-  "/get-commons",
-  validate(validator.getCommons),
-  commons.getCommons
-);
-
 
 routes.post(
   "/create-support",

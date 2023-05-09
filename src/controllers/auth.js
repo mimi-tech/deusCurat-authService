@@ -31,7 +31,12 @@ const updateAccountData = async (req, res) => {
   const data = await auth.updateAccountData(req.form);
   return response(res, data);
 }
+  
 
+const getCommons = async (req, res) => {
+  const data = await auth.getCommons(req.form);
+  return response(res, data);
+}
 
 
 
@@ -42,5 +47,6 @@ module.exports = {
   validateUserToken,
   updatePassword,
   updateAccountData,
+  getCommons
   
 };

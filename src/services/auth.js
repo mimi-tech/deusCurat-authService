@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const admin = require("firebase-admin");
 const { constants } = require("../configs");
-const { usersAccount } = require("../models");
+const { usersAccount,commons } = require("../models");
 
 /**
  * Display welcome text
@@ -272,12 +272,13 @@ const generalLogin = async (params) => {
  */
 const updatePassword = async (params) => {
   try {
-    const { email, password } = params;
+    const { emailAddress, password } = params;
     const isEmailExisting = await usersAccount.findOne({
-      email: email,
+      email: emailAddress,
     });
 
     if (!isEmailExisting) {
+      console.log(emailAddress);
       return {
         status: false,
         message: "Email not valid.",
@@ -295,14 +296,15 @@ const updatePassword = async (params) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     //update password
-    await usersAccount.updateOne(
-      { email: email },
+    const userData = await usersAccount.updateOne(
+      { email: emailAddress },
       {
         password: hashedPassword,
       }
     );
 
     return {
+      data:userData,
       status: true,
       message: "Password updated successfully. You may now login",
     };
@@ -377,7 +379,40 @@ const updatePassword = async (params) => {
 }
 
  
+/**
+ * for fetching all commons
+ * @param {Object} params  pageNumber params needed.
+ * @returns {Promise<Object>} Contains status, and returns data and message
+ */
+const getCommons  = async (params) => {
+  try {
+    const { page } = params;
 
+    const pageCount = 15;
+
+    const allCommons = await commons.find()
+      .limit(pageCount)
+      .skip(pageCount * (page - 1))
+      .exec();
+
+    if(allCommons){
+      return {
+        status: true,
+        data: allCommons,
+      };
+    }
+    return {
+      status: false,
+      message: "Couldn't get all commons",
+    };
+   
+  } catch (e) {
+    return {
+      status: false,
+      message: constants.SERVER_ERROR("ALL COMMONS"),
+    };
+  }
+};
 
 module.exports = {
   welcomeText,
@@ -386,6 +421,7 @@ module.exports = {
   validateUserToken,
   updatePassword,
   updateAccountData,
+  getCommons
 };
 
 

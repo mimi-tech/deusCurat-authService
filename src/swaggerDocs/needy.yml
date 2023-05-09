@@ -181,8 +181,12 @@ definitions: # Schema definition for request body
     type: object
     properties:
       images:
-        type: array
-        default: ["https://image.jpg"] 
+        type: string
+        default: "https://image.jpg" 
+
+      video:
+        type: string
+        default: "https://image.jpg" 
 
       description:
         type: string

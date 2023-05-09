@@ -23,32 +23,6 @@ paths:
           description: should return a common added successful
 
 
-  /commons/get-commons:
-    get:
-      tags:
-        - COMMONS # Value of the tag
-      summary: GET ALL COMMONS.
-      produces:
-        - application/json
-      parameters:
-        - in: header
-          name: authorization
-          description: access token
-          required: true
-          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
-
-        - in: query
-          name: page
-          type: number
-          default: 1
-          required: true
-
-      responses:
-        200:
-          description: should return all commons
-
-
-
   /commons/create-support:
     post:
       tags: # Tag property

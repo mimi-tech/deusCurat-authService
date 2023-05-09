@@ -25,7 +25,7 @@ module.exports = {
 
 
   updatePassword: {
-    email: Joi.string().required(),
+    emailAddress: Joi.string().required(),
     password: Joi.string().required(),
   },
 
@@ -34,6 +34,10 @@ module.exports = {
     firstName: Joi.string(),
     lastName: Joi.string(),
     gender: Joi.string().valid("male", "female"),
+    },
+
+    getCommons:{
+      page:Joi.number().required()
     },
   
 };

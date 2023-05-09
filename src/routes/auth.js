@@ -38,4 +38,9 @@ routes.put(
   auth.updateAccountData
 );
 
+routes.get(
+  "/get-commons",
+  validate(validator.getCommons),
+  auth.getCommons
+);
 module.exports = routes;

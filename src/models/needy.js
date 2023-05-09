@@ -62,11 +62,15 @@ const needyAccount = new mongoose.Schema(
   
       },  
       images: {
-        type: Array,
+        type: String,
         required: [true, "Request must have a photo"],
   
       },  
-      
+      video: {
+        type: String,
+        required: [true, "Request must have a video"],
+  
+      },  
       
     approvalStatus: {
      type:Boolean,

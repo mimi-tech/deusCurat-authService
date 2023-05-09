@@ -13,7 +13,7 @@ const { needyAccount,usersAccount,commons } = require("../models");
 
  const createNeedyRequest = async (params) => {
   try {
-    const {images,description, title,email, address } = params;
+    const {images,description, title,email, address,video } = params;
    
  //check if company owner has an account
  const isNeedyAccountExisting = await usersAccount.findOne({
@@ -55,6 +55,7 @@ if (isRequestExisting) {
    title: title,
    description:description,
    phoneNumber:isNeedyAccountExisting.phoneNumber,
+   video:video,
   
   });
  

@@ -97,6 +97,25 @@ paths:
       responses: # server responses
         201:
           description: should return update successful
+
+  /get-commons:
+    get:
+      tags:
+        - COMMONS # Value of the tag
+      summary: GET ALL COMMONS.
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: page
+          type: number
+          default: 1
+          required: true
+
+      responses:
+        200:
+          description: should return all commons
+         
         
 
 definitions: # Schema definition for request body
