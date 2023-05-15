@@ -11,10 +11,7 @@ module.exports = {
 
     },
 
-  getPayment:{
-    page:Joi.number().required(),
-    requestId:Joi.string()
-  },
+  
 
   updatePayment:{
     requestAuthId: Joi.string().required(),

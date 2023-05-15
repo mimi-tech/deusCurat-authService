@@ -23,35 +23,7 @@ paths:
           description: should return a payment added successful
 
 
-  /payment/get-payment:
-    get:
-      tags:
-        - PAYMENT # Value of the tag
-      summary: GET ALL PAYMENT.
-      produces:
-        - application/json
-      parameters:
-        - in: header
-          name: authorization
-          description: access token
-          required: true
-          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
-
-        - in: query
-          name: page
-          type: number
-          default: 1
-          required: true
-
-        - in: query
-          name: requestId
-          type: string
-          default: 18732736297312837832
-          required: true  
-
-      responses:
-        200:
-          description: should return all commons
+  
 
 
 

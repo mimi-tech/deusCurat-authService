@@ -10,6 +10,9 @@ const nonRestrictedEndPoints = [
   "/validate-user-token",
   "/update-password",
   "/get-commons",
+  "/get-payment",
+  "/get-all-needy",
+  "/get-testimony",
 ];
 
 
@@ -25,18 +28,17 @@ const restricted = [
   "/get-support",
   "/delete-support",
   "/create-needy-account",
-  "/get-all-needy",
+  
   "/get-a-needy-account",
   "/delete-a-needy-account",
   "/update-a-needy-account",
   "/update-a-needy-account-count",
   "/update-a-needy-account-status",
   "/create-testimony",
-  "/get-testimony",
+ 
   "/delete-testimony",
   "/get-a-testimony",
   "/add-payment",
-  "/get-payment",
   "/delete-payment",
   "/update-payment",
 

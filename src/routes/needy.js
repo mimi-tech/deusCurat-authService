@@ -12,12 +12,6 @@ routes.post(
 );
 
 routes.get(
-  "/get-all-needy",
-  validate(validator.getAllNeedy),
-  needy.getAllNeedy
-);
-
-routes.get(
   "/get-a-needy-account",
   validate(validator.getANeedy),
   needy.getANeedy

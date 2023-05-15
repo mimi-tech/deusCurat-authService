@@ -11,10 +11,7 @@ module.exports = {
 
   },
 
-  getAllNeedy:{
-    page:Joi.number().required(),
-    type: Joi.string().required(),
-  },
+  
 
   deleteANeedy:{
     userAuthId: Joi.string().required(),
@@ -29,9 +26,9 @@ module.exports = {
   },
 
   updateANeedyCount:{
-    userAuthId: Joi.string().required(),
+    userId: Joi.string().required(),
     type:Joi.string().required().valid("paid", "like","dislike"),
-    amount:Joi.number().required()
+    amount:Joi.number()
   },
 
   getANeedy:{

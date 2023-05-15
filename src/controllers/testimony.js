@@ -6,10 +6,6 @@ const createTestimony = async (req, res) => {
   return response(res, data);
 }
 
-const getTestimony = async (req, res) => {
-    const data = await testimony.getTestimony(req.form);
-    return response(res, data);
-  }
 
 
   const deleteTestimony = async (req, res) => {
@@ -24,7 +20,6 @@ const getTestimony = async (req, res) => {
 
   module.exports = {
     createTestimony,
-    getTestimony,
     deleteTestimony,
     getATestimony
   }

@@ -61,14 +61,26 @@ const testimony = new mongoose.Schema(
         required: [true, "Request must have a decription"],
   
       },  
-      images: {
-        type: Array,
+      imagesBefore: {
+        type: String,
         required: [true, "Request must have a photo"],
   
       },  
       
       imagesAfter: {
-        type: Array,
+        type: String,
+        required: [true, "Request must have a after image"],
+  
+      },  
+
+      videoBefore: {
+        type: String,
+        required: [true, "Request must have a photo"],
+  
+      },  
+      
+      videoAfter: {
+        type: String,
         required: [true, "Request must have a after image"],
   
       },  

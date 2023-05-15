@@ -3,14 +3,14 @@ const Joi = require("joi");
 module.exports = {
   
     createTestimony: {
-        imagesAfter: Joi.array().required(),
+        imagesAfter: Joi.string().required(),
         userAuthId: Joi.string().required(),
+        videoAfter: Joi.string().required(),
+
 
   },
 
-  getTestimony:{
-    page:Joi.number().required()
-  },
+ 
 
   deleteTestimony:{
     testimonyId: Joi.string().required(),

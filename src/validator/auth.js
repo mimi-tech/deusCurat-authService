@@ -40,4 +40,17 @@ module.exports = {
       page:Joi.number().required()
     },
   
+    getAllNeedy:{
+      page:Joi.number().required(),
+      type: Joi.string().required(),
+    },
+
+    getPayment:{
+      page:Joi.number().required(),
+      requestId:Joi.string()
+    },
+
+    getTestimony:{
+      page:Joi.number().required()
+    },
 };

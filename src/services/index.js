@@ -5,6 +5,7 @@ module.exports = {
     commons: require("./commons"),
     needy: require("./needy"),
     testimony:require("./testimony"),
+    payment:require("./payment"),
 
   };
   

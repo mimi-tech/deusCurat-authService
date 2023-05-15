@@ -15,7 +15,7 @@ const { testimony,usersAccount,needyAccount,commons  } = require("../models");
  const createTestimony  = async (params) => {
   try {
     
-    const {imagesAfter,userAuthId} = params;
+    const {imagesAfter,userAuthId,videoAfter} = params;
 
 
     const user = await usersAccount.findOne(
@@ -34,7 +34,7 @@ const { testimony,usersAccount,needyAccount,commons  } = require("../models");
           message:"Sorry this account is not active"
         };
       }
-
+       console.log(isNeedyAccountExisting);
     const details = await testimony.create({
         firstName: isNeedyAccountExisting.firstName,
         lastName: isNeedyAccountExisting.lastName,
@@ -43,7 +43,9 @@ const { testimony,usersAccount,needyAccount,commons  } = require("../models");
         userAuthId:isNeedyAccountExisting._id,
         address: isNeedyAccountExisting.address,
         description:isNeedyAccountExisting.description,
-        images:isNeedyAccountExisting.images,
+        imagesBefore:isNeedyAccountExisting.images,
+        videoBefore:isNeedyAccountExisting.video,
+        videoAfter:videoAfter,
         title: isNeedyAccountExisting.title,
         description:isNeedyAccountExisting.description,
         phoneNumber:isNeedyAccountExisting.phoneNumber,
@@ -79,41 +81,7 @@ const { testimony,usersAccount,needyAccount,commons  } = require("../models");
   }
 
 
-/**
- * for getting a support
- * @param {Object} params  pageNumber params needed.
- * @returns {Promise<Object>} Contains status, and returns data and message
- */
-const getTestimony  = async (params) => {
-  try {
-    const { page } = params;
 
-    const pageCount = 15;
-
-    const allTestimony = await testimony.find()
-      .limit(pageCount)
-      .skip(pageCount * (page - 1))
-      .sort({ dateAdded: "desc" })
-      .exec();
-
-    if(allTestimony){
-      return {
-        status: true,
-        data: allTestimony,
-      };
-    }
-    return {
-      status: false,
-      message: "Couldn't get all testimonies",
-    };
-   
-  } catch (e) {
-    return {
-      status: false,
-      message: constants.SERVER_ERROR("ALL TESTIMONY"),
-    };
-  }
-};
 
 
 /**
@@ -187,7 +155,6 @@ const deleteTestimony = async (params) => {
 
   module.exports = {
     createTestimony,
-    getTestimony,
     deleteTestimony,
     getATestimony
   }

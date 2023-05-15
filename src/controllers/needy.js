@@ -6,11 +6,6 @@ const createNeedyRequest = async (req, res) => {
   return response(res, data);
 }
 
-const getAllNeedy = async (req, res) => {
-    const data = await needy.getAllNeedy(req.form);
-    return response(res, data);
-  }
-
   const getANeedy = async (req, res) => {
     const data = await needy.getANeedy(req.form);
     return response(res, data);
@@ -39,7 +34,6 @@ const getAllNeedy = async (req, res) => {
 
   module.exports = {
     createNeedyRequest,
-    getAllNeedy,
     getANeedy,
     deleteANeedy,
     updateANeedy,

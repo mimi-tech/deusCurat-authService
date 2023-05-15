@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const admin = require("firebase-admin");
 const { constants } = require("../configs");
-const { usersAccount,commons } = require("../models");
+const { usersAccount,commons,payment,testimony,needyAccount } = require("../models");
 
 /**
  * Display welcome text
@@ -414,6 +414,191 @@ const getCommons  = async (params) => {
   }
 };
 
+
+/**
+ * for fetching all NEEDY
+ * @param {Object} params  No params needed.
+ * @returns {Promise<Object>} Contains status, and returns data and message
+ */
+const getAllNeedy = async (params) => {
+  try {
+    const { page, type } = params;
+
+    const pageCount = 15;
+      if(type === "all"){
+        const allRequest = await needyAccount.find()
+      .limit(pageCount)
+      .skip(pageCount * (page - 1))
+      .sort({ createdAt: "desc" })
+      .exec();
+
+    return {
+      status: true,
+      data: allRequest,
+    };
+      }
+    
+   if(type  == "rejected"){
+    const allRequest = await needyAccount.find({rejectStatus:true})
+      .limit(pageCount)
+      .skip(pageCount * (page - 1))
+      .sort({ createdAt: "desc" })
+      .exec();
+
+    return {
+      status: true,
+      data: allRequest,
+    };
+   }
+
+   if(type  == "approval"){
+    const allRequest = await needyAccount.find({approvalStatus:true})
+      .limit(pageCount)
+      .skip(pageCount * (page - 1))
+      .sort({ createdAt: "desc" })
+      .exec();
+
+    return {
+      status: true,
+      data: allRequest,
+    };
+   }
+
+   if(type  == "not approval"){
+    const allRequest = await needyAccount.find({approvalStatus:false,rejectStatus:false,showStatus:false})
+      .limit(pageCount)
+      .skip(pageCount * (page - 1))
+      .sort({ createdAt: "asc" })
+      .exec();
+
+    return {
+      status: true,
+      data: allRequest,
+    };
+   }
+
+
+   if(type  == "display"){
+    const allRequest = await needyAccount.find({displayStatus:true})
+      .limit(pageCount)
+      .skip(pageCount * (page - 1))
+      .sort({ createdAt: "desc" })
+      .exec();
+
+    return {
+      status: true,
+      data: allRequest,
+    };
+   }
+
+   if(type  == "showed"){
+    const allRequest = await needyAccount.find({showStatus:true})
+      .limit(pageCount)
+      .skip(pageCount * (page - 1))
+      .sort({ createdAt: "desc" })
+      .exec();
+
+    return {
+      status: true,
+      data: allRequest,
+    };
+   }
+
+  } catch (e) {
+    return {
+      status: false,
+      message: constants.SERVER_ERROR("ALL COMPANIES"),
+    };
+  }
+};
+
+/**
+ * for getting a support
+ * @param {Object} params  pageNumber params needed.
+ * @returns {Promise<Object>} Contains status, and returns data and message
+ */
+const getTestimony  = async (params) => {
+  try {
+    const { page } = params;
+
+    const pageCount = 15;
+
+    const allTestimony = await testimony.find()
+      .limit(pageCount)
+      .skip(pageCount * (page - 1))
+      .sort({ dateAdded: "desc" })
+      .exec();
+
+    if(allTestimony){
+      return {
+        status: true,
+        data: allTestimony,
+      };
+    }
+    return {
+      status: false,
+      message: "Couldn't get all testimonies",
+    };
+   
+  } catch (e) {
+    return {
+      status: false,
+      message: constants.SERVER_ERROR("ALL TESTIMONY"),
+    };
+  }
+};
+
+/**
+ * for fetching all payments
+ * @param {Object} params  pageNumber and requestId params needed.
+ * @returns {Promise<Object>} Contains status, and returns data and message
+ */
+const getPayment  = async (params) => {
+  try {
+    const { page, requestId } = params;
+
+    const pageCount = 15;
+    if(requestId){
+      const allCommons = await payment.find({requestAuthId:requestId})
+      .limit(pageCount)
+      .skip(pageCount * (page - 1))
+      .sort({ createdAt: "desc" })
+      .exec();
+
+    if(allCommons){
+      return {
+        status: true,
+        data: allCommons,
+      };
+    }
+    }
+    const allCommons = await payment.find()
+      .limit(pageCount)
+      .skip(pageCount * (page - 1))
+      .sort({ createdAt: "desc" })
+      .exec();
+
+    if(allCommons){
+      return {
+        status: true,
+        data: allCommons,
+      };
+    }
+    return {
+      status: false,
+      message: "Couldn't get all payment",
+    };
+   
+  } catch (e) {
+    console.log(e);
+    return {
+      status: false,
+      message: constants.SERVER_ERROR("ALL Payment"),
+    };
+  }
+};
+
+
 module.exports = {
   welcomeText,
   deuscuratRegistration,
@@ -421,7 +606,11 @@ module.exports = {
   validateUserToken,
   updatePassword,
   updateAccountData,
-  getCommons
+  getCommons,
+  getTestimony,
+  getPayment,
+  getAllNeedy
+
 };
 
 

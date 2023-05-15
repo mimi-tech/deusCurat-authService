@@ -37,6 +37,20 @@ const getCommons = async (req, res) => {
   const data = await auth.getCommons(req.form);
   return response(res, data);
 }
+const getAllNeedy = async (req, res) => {
+  const data = await auth.getAllNeedy(req.form);
+  return response(res, data);
+}
+
+const getTestimony = async (req, res) => {
+  const data = await auth.getTestimony(req.form);
+  return response(res, data);
+}
+const getPayment = async (req, res) => {
+  const data = await auth.getPayment(req.form);
+  return response(res, data);
+}
+
 
 
 
@@ -47,6 +61,8 @@ module.exports = {
   validateUserToken,
   updatePassword,
   updateAccountData,
-  getCommons
-  
+  getCommons,
+  getAllNeedy,
+  getTestimony,
+  getPayment
 };

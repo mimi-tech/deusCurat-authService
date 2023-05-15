@@ -1,10 +1,6 @@
 const { payment } = require("../services");
 const { response } = require("../helpers");
 
-const getPayment = async (req, res) => {
-  const data = await payment.getPayment(req.form);
-  return response(res, data);
-}
 
 const addPayment = async (req, res) => {
     const data = await payment.addPayment(req.form);
@@ -24,7 +20,6 @@ const addPayment = async (req, res) => {
 
 
   module.exports = {
-    getPayment,
     addPayment,
     deletePayment,
     updatePayment,

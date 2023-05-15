@@ -78,102 +78,7 @@ if (isRequestExisting) {
   }
 };
 
-/**
- * for fetching all NEEDY
- * @param {Object} params  No params needed.
- * @returns {Promise<Object>} Contains status, and returns data and message
- */
- const getAllNeedy = async (params) => {
-  try {
-    const { page, type } = params;
 
-    const pageCount = 15;
-      if(type === "all"){
-        const allRequest = await needyAccount.find()
-      .limit(pageCount)
-      .skip(pageCount * (page - 1))
-      .sort({ createdAt: "desc" })
-      .exec();
-
-    return {
-      status: true,
-      data: allRequest,
-    };
-      }
-    
-   if(type  == "rejected"){
-    const allRequest = await needyAccount.find({rejectStatus:true})
-      .limit(pageCount)
-      .skip(pageCount * (page - 1))
-      .sort({ createdAt: "desc" })
-      .exec();
-
-    return {
-      status: true,
-      data: allRequest,
-    };
-   }
-
-   if(type  == "approval"){
-    const allRequest = await needyAccount.find({approvalStatus:true})
-      .limit(pageCount)
-      .skip(pageCount * (page - 1))
-      .sort({ createdAt: "desc" })
-      .exec();
-
-    return {
-      status: true,
-      data: allRequest,
-    };
-   }
-
-   if(type  == "not approval"){
-    const allRequest = await needyAccount.find({approvalStatus:false,rejectStatus:false,showStatus:false})
-      .limit(pageCount)
-      .skip(pageCount * (page - 1))
-      .sort({ createdAt: "asc" })
-      .exec();
-
-    return {
-      status: true,
-      data: allRequest,
-    };
-   }
-
-
-   if(type  == "display"){
-    const allRequest = await needyAccount.find({displayStatus:true})
-      .limit(pageCount)
-      .skip(pageCount * (page - 1))
-      .sort({ createdAt: "desc" })
-      .exec();
-
-    return {
-      status: true,
-      data: allRequest,
-    };
-   }
-
-   if(type  == "showed"){
-    const allRequest = await needyAccount.find({showStatus:true})
-      .limit(pageCount)
-      .skip(pageCount * (page - 1))
-      .sort({ createdAt: "desc" })
-      .exec();
-
-    return {
-      status: true,
-      data: allRequest,
-    };
-   }
-
-  } catch (e) {
-    return {
-      status: false,
-      message: constants.SERVER_ERROR("ALL COMPANIES"),
-    };
-  }
-};
 
 
 /**
@@ -295,12 +200,13 @@ return {
 
 const updateANeedyCount = async (params) => {
   try {
-    const { authId, type, userAuthId, amount } = params;
-
+    const { authId, type, userId, amount } = params;
+ 
     //check if the user is already existing
     const needy = await needyAccount.findOne({
-      userAuthId: userAuthId,
+      userAuthId: userId,
     });
+      console.log(userId)
 
     if (!needy) {
       return {
@@ -309,7 +215,7 @@ const updateANeedyCount = async (params) => {
       };
     }
 
-    if(userAuthId === authId){
+    if(userId === authId){
       return {
         status: false,
         message: "You cannot react to your own request",
@@ -433,7 +339,6 @@ return {
 
 module.exports = {
   createNeedyRequest,
-  getAllNeedy,
   getANeedy,
   deleteANeedy,  
   updateANeedy,

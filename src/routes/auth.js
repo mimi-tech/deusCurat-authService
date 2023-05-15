@@ -43,4 +43,23 @@ routes.get(
   validate(validator.getCommons),
   auth.getCommons
 );
+
+routes.get(
+  "/get-all-needy",
+  validate(validator.getAllNeedy),
+  auth.getAllNeedy
+);
+
+routes.get(
+  "/get-payment",
+  validate(validator.getPayment),
+  auth.getPayment
+);
+
+routes.get(
+  "/get-testimony",
+  validate(validator.getTestimony),
+  auth.getTestimony
+);
+
 module.exports = routes;

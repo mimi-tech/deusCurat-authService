@@ -11,12 +11,6 @@ routes.post(
   payment.addPayment
 );
 
-routes.get(
-  "/get-payment",
-  validate(validator.getPayment),
-  payment.getPayment
-);
-
 
 routes.delete(
   "/delete-payment",

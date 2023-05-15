@@ -25,35 +25,7 @@ paths:
 
 
 
-  /needy/get-all-needy:
-    get:
-      tags:
-        - NEEDY # Value of the tag
-      summary: GET ALL NEEDY.
-      produces:
-        - application/json
-      parameters:
-        - in: header
-          name: authorization
-          description: access token
-          required: true
-          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
-
-        - in: query
-          name: page
-          type: number
-          default: 1
-          required: true
-
-        - in: query
-          name: type
-          type: string
-          default: all
-          required: true  
-
-      responses:
-        200:
-          description: should return all testimony
+  
 
 
   /needy/get-a-needy-account:

@@ -6,54 +6,6 @@ const admin = require("firebase-admin");
 const { constants } = require("../configs");
 const { payment,needyAccount,usersAccount,commons  } = require("../models");
 
-/**
- * for fetching all commons
- * @param {Object} params  pageNumber params needed.
- * @returns {Promise<Object>} Contains status, and returns data and message
- */
-const getPayment  = async (params) => {
-    try {
-      const { page, requestId } = params;
-  
-      const pageCount = 15;
-      if(requestId){
-        const allCommons = await payment.find({requestAuthId:requestId})
-        .limit(pageCount)
-        .skip(pageCount * (page - 1))
-        .sort({ createdAt: "desc" })
-        .exec();
-  
-      if(allCommons){
-        return {
-          status: true,
-          data: allCommons,
-        };
-      }
-      }
-      const allCommons = await payment.find()
-        .limit(pageCount)
-        .skip(pageCount * (page - 1))
-        .sort({ createdAt: "desc" })
-        .exec();
-  
-      if(allCommons){
-        return {
-          status: true,
-          data: allCommons,
-        };
-      }
-      return {
-        status: false,
-        message: "Couldn't get all payment",
-      };
-     
-    } catch (e) {
-      return {
-        status: false,
-        message: constants.SERVER_ERROR("ALL Payment"),
-      };
-    }
-  };
 
   /**
  * for fetching all commons
@@ -244,7 +196,6 @@ const updatePayment = async (params) => {
 
   module.exports = {
     addPayment,
-    getPayment,
     deletePayment,
     updatePayment
   }

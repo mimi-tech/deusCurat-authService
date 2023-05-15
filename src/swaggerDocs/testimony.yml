@@ -25,29 +25,7 @@ paths:
 
 
 
-  /testimony/get-testimony:
-    get:
-      tags:
-        - TESTIMONY # Value of the tag
-      summary: GET ALL TESTIMONY.
-      produces:
-        - application/json
-      parameters:
-        - in: header
-          name: authorization
-          description: access token
-          required: true
-          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
-
-        - in: query
-          name: page
-          type: number
-          default: 1
-          required: true
-
-      responses:
-        200:
-          description: should return all testimony
+  
 
 
   /testimony/get-a-testimony:
@@ -114,8 +92,12 @@ definitions: # Schema definition for request body
     type: object
     properties:
       imagesAfter:
-        type: array
-        default: ["https://example.com"]  
+        type: string
+        default: "https://example.com"
+
+      videoAfter:
+        type: string
+        default: "https://example.com"  
 
       userAuthId:
         type: string

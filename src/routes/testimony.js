@@ -12,11 +12,7 @@ routes.post(
   validate(validator.createTestimony),
   testimony.createTestimony
 );
-routes.get(
-  "/get-testimony",
-  validate(validator.getTestimony),
-  testimony.getTestimony
-);
+
 routes.delete(
   "/delete-testimony",
   validate(validator.deleteTestimony),
