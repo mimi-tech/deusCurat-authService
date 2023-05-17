@@ -557,7 +557,7 @@ const getPayment  = async (params) => {
   try {
     const { page, requestId } = params;
 
-    const pageCount = 15;
+    const pageCount = 4;
     if(requestId){
       const allCommons = await payment.find({requestAuthId:requestId})
       .limit(pageCount)
@@ -572,7 +572,7 @@ const getPayment  = async (params) => {
       };
     }
     }
-    const allCommons = await payment.find()
+    const allCommons = await payment.find({accepted: true})
       .limit(pageCount)
       .skip(pageCount * (page - 1))
       .sort({ createdAt: "desc" })
