@@ -62,4 +62,10 @@ routes.get(
   auth.getTestimony
 );
 
+routes.post(
+  "/admin-login",
+  validate(validator.adminLogin),
+  auth.adminLogin
+);
+
 module.exports = routes;

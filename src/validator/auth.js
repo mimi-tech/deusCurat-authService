@@ -47,10 +47,16 @@ module.exports = {
 
     getPayment:{
       page:Joi.number().required(),
-      requestId:Joi.string()
+      requestId:Joi.string(),
+      highestDonors:Joi.string()
     },
 
     getTestimony:{
       page:Joi.number().required()
+    },
+
+    adminLogin: {
+      emailAddress: Joi.string().required(),
+      password: Joi.string().required(),
     },
 };

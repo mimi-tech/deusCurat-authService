@@ -27,10 +27,16 @@ const searchUsers = async (req, res) => {
   return response(res, data);
 };
 
+const createAdmin = async (req, res) => {
+  const data = await users.createAdmin(req.form);
+  return response(res, data);
+}
+
 module.exports = {
   deleteAUser,
   blockAndUnblockUser,
   getAllUsers,
   getAUser,
   searchUsers,
+  createAdmin
 };

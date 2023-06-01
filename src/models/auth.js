@@ -53,6 +53,11 @@ const usersAccount = new mongoose.Schema(
     createdAt: {
       type: Date,
       default: new Date()
+    },
+
+    isAdmin: {
+      type: Boolean,
+      default: false,
     }
 
   },

@@ -33,7 +33,27 @@ paths:
             $ref: "#/definitions/generalLogin"
       responses: # server responses
         201:
-          description: should return login successful        
+          description: should return login successful      
+
+
+
+  /admin-login:
+    post:
+      tags: # Tag property
+        - AUTH # Value of the tag
+      summary: GENERAL LOGIN ENDPOINT FOR ADMINS.
+      produces:
+        - application/json
+      parameters:
+        - in: body # request body
+          name: general login endpoint for admin # name of request, can be any name
+          description: It enables all admin to login
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/adminLogin"
+      responses: # server responses
+        201:
+          description: should return login successful                
 
 
   /validate-user-token: # path of the grp from your endpoint
@@ -170,7 +190,13 @@ paths:
           name: requestId
           type: string
           default: 18732736297312837832
-          required: true  
+          required: false  
+
+        - in: query
+          name: highestDonors
+          type: string
+          default: highestDonors
+          required: false    
 
       responses:
         200:
@@ -248,7 +274,20 @@ definitions: # Schema definition for request body
 
       phoneNumber:
         type: string
-        default: +2348037335555        
+        default: +2348037335555 
+
+
+  adminLogin:
+    type: object
+    properties:
+      emailAddress:
+        type: string
+        default: miriam@gmail.com
+
+      password:
+        type: string
+        default: abc123  
+              
 
 
   validateUserToken:

@@ -15,7 +15,7 @@ const addCommons = async (req, res) => {
   }
 
   const getSupport = async (req, res) => {
-    const data = await auth.getSupport(req.form);
+    const data = await commons.getSupport(req.form);
     return response(res, data);
   }
 

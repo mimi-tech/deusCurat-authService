@@ -236,10 +236,70 @@ const publicData = {
   };
 
 
+
+   /**
+ * for admin  account
+ * @param {Object} params  user id {authId} params needed.
+ * @returns {Promise<Object>} Contains status, and returns data and message
+ */
+
+ const createAdmin = async (params) => {
+  try {
+    const { adminId, } = params;
+
+    //check if the user is already existing
+    const personnels = await usersAccount.findOne({
+      _id: adminId,
+      isAdmin: false,
+      isActive:true
+    });
+
+    if (!personnels) {
+      return {
+        status: false,
+        message: "Admin does not exist",
+      };
+    }
+    
+ //go ahead and suspend the account
+ 
+const filter = { _id: adminId};
+    const updatepersonnel = await usersAccount.findOneAndUpdate(
+      filter,
+      { isAdmin: personnels.isAdmin === true?false:true},
+      {
+        new: true,
+      }
+    );
+    if(!updatepersonnel){
+      return {
+        status: false,
+        message: "Error updating personnel",
+      };
+         
+    }
+
+ return {
+   status: true,
+   message: personnels.isActive === false?"User is now an admin":"User is no longer an admin",
+ };
+    
+
+   
+  } catch (e) {
+    return {
+      status: false,
+      message: constants.SERVER_ERROR("Creating ADMIN ACCOUNT"),
+    };
+  }
+};
+
+
 module.exports = {
   deleteAUser,
   blockAndUnblockUser,
   getAllUsers,
   getAUser,
   searchUsers,
+  createAdmin
 };

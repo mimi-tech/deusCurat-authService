@@ -26,4 +26,8 @@ module.exports = {
       searchQuery: Joi.string().required(),
   },
   
+  createAdmin: {
+    adminId: Joi.string().required()
+  },
+  
 };

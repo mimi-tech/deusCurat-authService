@@ -190,6 +190,95 @@ const generalLogin = async (params) => {
 
 
 /**
+ * login admin
+ * @param {Object} params  contains email, password and accountTypes.
+ * @returns {Promise<Object>} Contains status, and returns message
+ */
+const adminLogin = async (params) => {
+  try {
+    const { emailAddress, password } = params;
+       
+    const userExist = await usersAccount.findOne( { $and: [{ email: emailAddress }, { isAdmin:true }] });
+    if (!userExist) {
+      return {
+        status: false,
+        message: "incorrect credentials!",
+      };
+    }
+
+    //extract and store existing encrypted user password
+    const existingUserPassword = userExist.password;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    //validate incoming user password with existing password
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existingUserPassword
+    );
+
+    if (!isPasswordCorrect) {
+      return {
+        status: false,
+        message: "incorrect credentials",
+        
+      };
+    }
+
+    const {
+      email: _email,
+      phone,
+      _id,
+      isActive,
+      gender,
+      firstName,
+      lastName,
+      contributionCount,
+      requestCount
+    } = userExist;
+
+    const serializeUserDetails = {
+     
+      _email,
+      phone,
+      _id,
+      isActive,
+      gender,
+      firstName,
+      lastName,
+      contributionCount,
+      requestCount
+    };
+   
+    const accessToken = jwt.sign(serializeUserDetails, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    });
+    const publicData = {
+      id: userExist._id,
+      email: userExist.email,
+      phoneNumber: userExist.phoneNumber,
+      firstName: userExist.firstName,
+      lastName: userExist.lastName,
+      gender: userExist.gender,
+      contributionCount: userExist.contributionCount,
+      requestCount: userExist.requestCount,
+    };
+    return {
+      status: true,
+      message: "Login successful",
+      token: accessToken,
+      data: publicData,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      message: constants.SERVER_ERROR("LOGIN"),
+    };
+  }}
+
+
+
+
+/**
  * validates user token
  * @param {Object} params  contains email, password and roles.
  * @returns {Promise<Object>} Contains status, and returns message
@@ -394,7 +483,7 @@ const getCommons  = async (params) => {
       .limit(pageCount)
       .skip(pageCount * (page - 1))
       .exec();
-
+       
     if(allCommons){
       return {
         status: true,
@@ -425,6 +514,20 @@ const getAllNeedy = async (params) => {
     const { page, type } = params;
 
     const pageCount = 15;
+      if(type === "new"){
+        const allRequest = await needyAccount.find({rejectStatus:false,showStatus:false,approvalStatus:false,displayStatus:false})
+      .limit(pageCount)
+      .skip(pageCount * (page - 1))
+      .sort({ createdAt: "asc" })
+      .exec();
+
+    return {
+      status: true,
+      data: allRequest,
+    };
+      }
+    
+
       if(type === "all"){
         const allRequest = await needyAccount.find()
       .limit(pageCount)
@@ -555,13 +658,15 @@ const getTestimony  = async (params) => {
  */
 const getPayment  = async (params) => {
   try {
-    const { page, requestId } = params;
+    const { page, requestId, highestDonors } = params;
 
     const pageCount = 4;
+    const pageCount2 = 15;
+
     if(requestId){
-      const allCommons = await payment.find({requestAuthId:requestId})
-      .limit(pageCount)
-      .skip(pageCount * (page - 1))
+      const allCommons = await payment.find({requestId:requestId})
+      .limit(pageCount2)
+      .skip(pageCount2 * (page - 1))
       .sort({ createdAt: "desc" })
       .exec();
 
@@ -572,6 +677,22 @@ const getPayment  = async (params) => {
       };
     }
     }
+
+   if(highestDonors){
+    const allCommons = await payment.find({accepted:true})
+    .limit(pageCount2)
+    .skip(pageCount2 * (page - 1))
+    .sort({ amount: -1 })
+    .exec();
+
+  if(allCommons){
+    return {
+      status: true,
+      data: allCommons,
+    };
+  }
+   }
+
     const allCommons = await payment.find({accepted: true})
       .limit(pageCount)
       .skip(pageCount * (page - 1))
@@ -609,8 +730,8 @@ module.exports = {
   getCommons,
   getTestimony,
   getPayment,
-  getAllNeedy
-
+  getAllNeedy,
+  adminLogin
 };
 
 

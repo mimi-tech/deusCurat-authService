@@ -5,7 +5,13 @@ const jwt = require("jsonwebtoken");
 const admin = require("firebase-admin");
 const { constants } = require("../configs");
 const { payment,needyAccount,usersAccount,commons  } = require("../models");
+const { generalHelperFunctions } = require("../helpers");
 
+const year = generalHelperFunctions.generateYear();
+    const month = generalHelperFunctions.generateMonth();
+    const week = generalHelperFunctions.generateWeek();
+    const day = generalHelperFunctions.generateDay();
+    const monthName = generalHelperFunctions.generateMonthName();
 
   /**
  * for fetching all commons
@@ -128,10 +134,10 @@ const deletePayment = async (params) => {
 const updatePayment = async (params) => {
     try {
       const { requestAuthId, amount, userAuthId , paymentId} = params;
-  
+   
       //check if the user is already existing
       const needy = await needyAccount.findOne({
-        userAuthId: requestAuthId,
+        _id: requestAuthId,
       });
   
       if (!needy) {
@@ -154,7 +160,7 @@ const updatePayment = async (params) => {
     };
   }
 
-  //check if  account is already registered
+  //check if  payment is already registered
   const payments = await payment.findOne({
     _id: paymentId,
   });
@@ -165,13 +171,21 @@ const updatePayment = async (params) => {
       message: "Payment doesn't exist",
     };
   }
-      
-  
-        needy.paidCount += 1;
-        needy.amountPaid += amount
-        await needy.save();
+      console.log("sdcsdcsd");
+        await needyAccount.updateOne(
+          { _id: requestAuthId },
+          { $inc: { amountPaid: amount } },
+          { $inc: { paidCount: 1 } }
+
+        );
+
         const common = await commons.findOne();
       common.totalDonation = common.totalDonation += amount
+      common.yearlyDonation = common.year === year ? common.yearlyDonation += amount : amount;
+      common.monthlyDonation = common.month === month && common.year === year ? common.monthlyDonation += amount : amount;
+      common.weeklyDonation = common.month === month && common.year === year && common.week  === week ? common.weeklyDonation += amount : amount;
+      common.dailyDonation = common.month === month && common.year === year && common.day  === day ? common.dailyDonation += amount : amount;
+
       common.save();
 
       userAccount.contributionCount =  userAccount.contributionCount += 1
@@ -179,6 +193,9 @@ const updatePayment = async (params) => {
 
       payments.accepted = true;
       payments.save();
+
+      
+
   
   return {
     status: true,

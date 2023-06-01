@@ -290,6 +290,7 @@ const updateANeedyStatus = async (params) => {
     if(type === "approval"){
       if(needy.approvalStatus === true){
         needy.approvalStatus = false;
+        needy.approvedDate = new Date();
         await needy.save();
       }else{
         needy.approvalStatus = true;
@@ -307,13 +308,14 @@ const updateANeedyStatus = async (params) => {
       }
     }
     
-    if(type === "show"){
-        needy.showStatus = true;
-        await needy.save();
+    // if(type === "show"){
+    //     needy.showStatus = true;
+    //     await needy.save();
       
-    }
+    // }
 
     if(type === "display"){
+      needy.showStatus = true;
       if(needy.displayStatus === true){
         needy.displayStatus = false;
         await needy.save();

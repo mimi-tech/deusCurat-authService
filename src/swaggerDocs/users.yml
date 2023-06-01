@@ -150,6 +150,31 @@ paths:
           description: should return search all users successful
 
 
+  /users/create-admin:
+    put:
+      tags: # Tag property
+        - USERS # Value of the tag
+      summary: ACCOUNT STATUS.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: body # request body
+          name: create-admin # name of request, can be any name
+          description: It enables admin account to be created
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/createAdmin"
+      responses: # server responses
+        201:
+          description: should return update successful            
+
+
 
 definitions: # Schema definition for request body
    
@@ -168,4 +193,12 @@ definitions: # Schema definition for request body
       accountId:
         type: string
         default: 61dcba2f975d5458b6164f01 
+
+
+  createAdmin:
+    type: object
+    properties:
+      adminId:
+        type: string
+        default: 61dcba2f975d5458b6164f01        
      

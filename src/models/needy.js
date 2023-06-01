@@ -120,6 +120,11 @@ const needyAccount = new mongoose.Schema(
     createdAt: {
       type: Date,
       default: new Date()
+    },
+
+    approvedDate: {
+      type: Date,
+      default: new Date()
     }
 
   },

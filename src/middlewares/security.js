@@ -13,6 +13,7 @@ const nonRestrictedEndPoints = [
   "/get-payment",
   "/get-all-needy",
   "/get-testimony",
+  "/admin-login",
 ];
 
 
@@ -41,7 +42,7 @@ const restricted = [
   "/add-payment",
   "/delete-payment",
   "/update-payment",
-
+  "/create-admin"
 ];
 const inServiceEndPoints = ["/get-church-user-in-app"];
 

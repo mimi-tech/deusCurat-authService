@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const admin = require("firebase-admin");
 const { constants } = require("../configs");
 const { commons,support,usersAccount  } = require("../models");
+const { generalHelperFunctions } = require("../helpers");
 
 
 
@@ -16,14 +17,23 @@ const { commons,support,usersAccount  } = require("../models");
 const addCommons  = async (params) => {
     try {
       const {accountDetails} = params;
-  
+      const year = generalHelperFunctions.generateYear();
+      const month = generalHelperFunctions.generateMonth();
+      const week = generalHelperFunctions.generateWeek();
+      const day = generalHelperFunctions.generateDay();
+      const monthName = generalHelperFunctions.generateMonthName();
       //check if collection exist 
 
       const doc = await commons.exists();
       if(!doc){
   
       const allCommons = await commons.create({
-        accountDetails:accountDetails
+        accountDetails:accountDetails,
+        year:year,
+        month:month,
+        week:week,
+        day:day,
+        monthName:monthName
       });
         
   

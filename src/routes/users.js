@@ -37,6 +37,13 @@ routes.get(
 );
 
 
+routes.put(
+  "/create-admin",
+  validate(validator.searchUsers),
+  users.searchUsers
+);
+
+
 
 
 module.exports = routes;

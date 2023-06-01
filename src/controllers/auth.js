@@ -52,6 +52,12 @@ const getPayment = async (req, res) => {
 }
 
 
+const adminLogin = async (req, res) => {
+  const data = await auth.adminLogin(req.form);
+  return response(res, data);
+}
+
+
 
 
 module.exports = {
@@ -64,5 +70,6 @@ module.exports = {
   getCommons,
   getAllNeedy,
   getTestimony,
-  getPayment
+  getPayment,
+  adminLogin
 };
