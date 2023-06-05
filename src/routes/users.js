@@ -39,8 +39,8 @@ routes.get(
 
 routes.put(
   "/create-admin",
-  validate(validator.searchUsers),
-  users.searchUsers
+  validate(validator.createAdmin),
+  users.createAdmin
 );
 
 

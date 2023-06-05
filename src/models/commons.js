@@ -12,6 +12,11 @@ const commons = new mongoose.Schema(
         default:0
       },
 
+      usersCount: {
+        type: Number,
+        default:0
+      },
+
       totalDonation: {
         type: Number,
         default:0

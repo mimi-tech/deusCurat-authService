@@ -90,7 +90,7 @@ if (isRequestExisting) {
 const getANeedy = async (params) => {
   const { userAuthId } = params;
   try {
-    const needy = await needyAccount.findOne({ userAuthId: userAuthId });
+    const needy = await needyAccount.findOne( { $or: [{ userAuthId: userAuthId }, { _id:userAuthId }] });
 
     if (!needy) {
       return {

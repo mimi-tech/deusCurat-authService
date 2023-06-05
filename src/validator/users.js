@@ -12,7 +12,7 @@ module.exports = {
 
   getAllUsers: {
     page: Joi.number().required(),
-    type: Joi.string().required().valid( "blocked", "all"),
+    type: Joi.string().required().valid( "blocked", "all","admin"),
 
   },
 
@@ -27,7 +27,7 @@ module.exports = {
   },
   
   createAdmin: {
-    adminId: Joi.string().required()
+    adminEmail: Joi.string().required()
   },
   
 };

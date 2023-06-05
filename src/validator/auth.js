@@ -48,7 +48,9 @@ module.exports = {
     getPayment:{
       page:Joi.number().required(),
       requestId:Joi.string(),
-      highestDonors:Joi.string()
+      highestDonors:Joi.string(),
+      type:Joi.string(),
+      userAuthId:Joi.string()
     },
 
     getTestimony:{

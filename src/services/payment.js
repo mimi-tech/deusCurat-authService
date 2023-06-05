@@ -55,7 +55,10 @@ const isRequest = await needyAccount.findOne({
 
       const requestDetails = {
         needyName:isRequest.firstName + " " + isRequest.lastName,
-        needyGender: isRequest.gender
+        needyGender: isRequest.gender,
+        needyAddress: isRequest.address,
+        needyTitle: isRequest.title,
+        needyImage: isRequest.images
       }
       const allCommons = await payment.create({
         prove:prove,
@@ -63,7 +66,8 @@ const isRequest = await needyAccount.findOne({
         requestAuthId: isRequest.userAuthId,
         senderDetails:sender,
         requestDetails:requestDetails,
-        amount:amount
+        amount:amount,
+        userAuthId:authId
       });
         
   

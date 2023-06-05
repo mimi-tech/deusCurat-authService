@@ -85,6 +85,10 @@ const welcomeText = async () => {
       gender: newUserAccount.gender,
     };
 
+    const common = await commons.findOne();
+    common.usersCount = common.usersCount += 1
+    common.save()
+
     return {
       status: true,
       message: "Account created successfully",
@@ -624,7 +628,7 @@ const getTestimony  = async (params) => {
   try {
     const { page } = params;
 
-    const pageCount = 15;
+    const pageCount = 50;
 
     const allTestimony = await testimony.find()
       .limit(pageCount)
@@ -658,10 +662,10 @@ const getTestimony  = async (params) => {
  */
 const getPayment  = async (params) => {
   try {
-    const { page, requestId, highestDonors } = params;
+    const { page, requestId, highestDonors, type, userAuthId } = params;
 
     const pageCount = 4;
-    const pageCount2 = 15;
+    const pageCount2 = 50;
 
     if(requestId){
       const allCommons = await payment.find({requestId:requestId})
@@ -693,18 +697,83 @@ const getPayment  = async (params) => {
   }
    }
 
-    const allCommons = await payment.find({accepted: true})
-      .limit(pageCount)
-      .skip(pageCount * (page - 1))
-      .sort({ createdAt: "desc" })
-      .exec();
+   if(userAuthId){
+    const allCommons = await payment.find({userAuthId: userAuthId})
+    .limit(pageCount2)
+    .skip(pageCount2 * (page - 1))
+    .sort({ createdAt: "desc" })
+    .exec();
 
-    if(allCommons){
-      return {
-        status: true,
-        data: allCommons,
-      };
-    }
+  if(allCommons){
+    return {
+      status: true,
+      data: allCommons,
+    };
+  }
+   }
+
+   if(type === 'all'){
+    const allCommons = await payment.find()
+    .limit(pageCount2)
+    .skip(pageCount2 * (page - 1))
+    .sort({ createdAt: "desc" })
+    .exec();
+
+  if(allCommons){
+    return {
+      status: true,
+      data: allCommons,
+    };
+  }
+   }
+
+   if(type === 'accept'){
+    console.log('Accept')
+    const allCommons = await payment.find({accepted: true})
+    .limit(pageCount2)
+    .skip(pageCount2 * (page - 1))
+    .sort({ createdAt: "desc" })
+    .exec();
+
+  if(allCommons){
+    return {
+      status: true,
+      data: allCommons,
+    };
+  }
+   }
+
+   if(type === 'new'){
+    console.log('I am here')
+    const allCommons = await payment.find({accepted: false})
+    .limit(pageCount2)
+    .skip(pageCount2 * (page - 1))
+    .sort({ createdAt: "desc" })
+    .exec();
+
+  if(allCommons){
+    return {
+      status: true,
+      data: allCommons,
+    };
+  }
+   }
+   const allCommons = await payment.find({accepted: true})
+   .limit(pageCount)
+   .skip(pageCount * (page - 1))
+   .sort({ createdAt: "desc" })
+   .exec();
+    console.log("All Commons")
+ if(allCommons){
+   return {
+     status: true,
+     data: allCommons,
+   };
+ }
+   
+
+
+
     return {
       status: false,
       message: "Couldn't get all payment",

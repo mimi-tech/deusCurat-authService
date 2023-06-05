@@ -15,7 +15,7 @@ const { testimony,usersAccount,needyAccount,commons  } = require("../models");
  const createTestimony  = async (params) => {
   try {
     
-    const {imagesAfter,userAuthId,videoAfter} = params;
+    const {imagesAfter,userAuthId,videoAfter,testimonyTitle,testimonyDesc} = params;
 
 
     const user = await usersAccount.findOne(
@@ -55,6 +55,8 @@ const { testimony,usersAccount,needyAccount,commons  } = require("../models");
         amountNeeded:isNeedyAccountExisting.amountNeeded,
          amountPaid:isNeedyAccountExisting.amountPaid,
          paidCount:isNeedyAccountExisting.paidCount,
+         testimonyDesc:testimonyDesc,
+         testimonyTitle:testimonyTitle
 
     })
     const common = await commons.findOne();
@@ -96,18 +98,19 @@ const getATestimony  = async (params) => {
       { $or: [{ _id: testimonyId }, { userAuthId:testimonyId }] });
 
 
-    if(testimonyExist){
-      return {
-        status: true,
-        data: testimonyExist,
-      };
-    }
-    return {
-      status: false,
-      message: "Couldn't get testimonies",
-    };
+      if(!testimonyExist){
+        return {
+         status: false,
+         message: "Couldn't get testimonies",
+       }; 
+       }
+       return {
+         status: true,
+         data: testimonyExist,
+       };
    
   } catch (e) {
+    console.l
     return {
       status: false,
       message: constants.SERVER_ERROR("A TESTIMONY"),
@@ -124,14 +127,6 @@ const getATestimony  = async (params) => {
 const deleteTestimony = async (params) => {
   try {
     const { testimonyId } = params;
-    const allSupport = await testimony.exists()
-      
-    if(!allSupport){
-      return {
-        status: false,
-        message:"No support is available",
-      };
-    }
 
     const details = await testimony.deleteOne({_id:testimonyId});
     if(details){
@@ -146,6 +141,7 @@ const deleteTestimony = async (params) => {
     };
    
   } catch (e) {
+    console.log(e);
     return {
       status: false,
       message: constants.SERVER_ERROR("DELETING TESTIMONY"),

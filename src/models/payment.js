@@ -13,6 +13,11 @@ const payment = new mongoose.Schema(
         required: [true, "request must have auth id"],
         },
 
+        userAuthId: {
+          type:String,
+          required: [true, "user must have auth id"],
+          },
+
     senderDetails: {
         type: Object,
         required: [true, "user must have email"],

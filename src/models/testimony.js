@@ -115,6 +115,13 @@ const testimony = new mongoose.Schema(
         type: Number,
         required: [true, "Request must have a amount paid"],
       },
+      testimonyTitle: {
+        type: String,
+      },
+
+      testimonyDesc: {
+        type: String,
+      },
 
     createdAt: {
       type: Date,

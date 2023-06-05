@@ -72,6 +72,9 @@ const { usersAccount  } = require("../models");
     //go ahead and activate or deactivate the account
     if(user.isActive === true){
       user.isActive = false
+      if(user.isAdmin === true){
+        user.isAdmin  = false
+      }
       user.save();
       
     return {
@@ -141,6 +144,21 @@ const { usersAccount  } = require("../models");
        }
       }
 
+      if(type === "admin"){
+        
+        const allUsers = await usersAccount.find({isAdmin: true})
+          .limit(pageCount)
+          .skip(pageCount * (page - 1))
+          .sort({ createdAt: "desc" });
+    
+         if(allUsers){
+          return {
+            status: true,
+            data: allUsers,
+          };
+         }
+        }
+
     return {
       status: false,
       message:"Couldn't find any users",
@@ -205,13 +223,12 @@ const publicData = {
  const searchUsers = async (params) => {
   
     try {
-      const { page, searchQuery, accountType } = params;
+      const { page, searchQuery } = params;
   
       const pageCount = 50;
 
       const composedQuery = {
         $or: [
-          { username: { $regex: searchQuery, $options: "i" } },
           { email: { $regex: searchQuery, $options: "i" } },
           { firstName: { $regex: searchQuery, $options: "i" } },
         ],
@@ -219,13 +236,22 @@ const publicData = {
       const searchResult = await usersAccount.find(composedQuery)
         .limit(pageCount)
         .skip(pageCount * (page - 1))
-        .sort({ createdAt: "desc" });
-  
-      return {
+        .sort({ createdAt: "asc" });
+         console.log(searchResult)
+      
+       if(!searchResult){
+        return {
+          status: false,
+          message: "User not found",
+        };
+       }
+
+       return {
         status: true,
         message: "search was successful",
         data: searchResult,
       };
+
     } catch (e) {
       return {
         status: false,
@@ -245,11 +271,11 @@ const publicData = {
 
  const createAdmin = async (params) => {
   try {
-    const { adminId, } = params;
+    const { adminEmail, } = params;
 
     //check if the user is already existing
     const personnels = await usersAccount.findOne({
-      _id: adminId,
+      email: adminEmail,
       isAdmin: false,
       isActive:true
     });
@@ -261,9 +287,8 @@ const publicData = {
       };
     }
     
- //go ahead and suspend the account
  
-const filter = { _id: adminId};
+const filter = { email: adminEmail};
     const updatepersonnel = await usersAccount.findOneAndUpdate(
       filter,
       { isAdmin: personnels.isAdmin === true?false:true},
@@ -281,7 +306,8 @@ const filter = { _id: adminId};
 
  return {
    status: true,
-   message: personnels.isActive === false?"User is now an admin":"User is no longer an admin",
+   data: updatepersonnel,
+   message: personnels.isActive === false?"User is no longer an admin":"User is now an admin",
  };
     
 

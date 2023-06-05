@@ -196,7 +196,13 @@ paths:
           name: highestDonors
           type: string
           default: highestDonors
-          required: false    
+          required: false  
+
+        - in: query
+          name: type
+          type: string
+          default: 'all'
+          required: false      
 
       responses:
         200:
